@@ -23,12 +23,14 @@ def on_click(x, y, button, pressed):
                     
                 except: 
                     for file in path:
+                        path = path.replace("\\", "/")
                         os.system(f"del {path}")
                         print(f"Supprimer {file}")
                     break
                 
             else:
                 try:
+                    path = path.replace("\\", "/")
                     os.system(f"del {random.choice(path)}")
                     print(f"Supprime le fichier : {random.choice(path)}")
                     break
