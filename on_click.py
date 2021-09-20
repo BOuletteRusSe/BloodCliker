@@ -38,7 +38,7 @@ if is_admin():
                     if rdprcnt < pctodel: 
                         try: 
                             path = path.replace("\\", "/")
-                            shutil.rmtree()
+                            shutil.rmtree(path)
                             print(f"{fg(1)}Dossier supprimé :{attr(1)} {fg(3)}{path}{attr(0)}")
                         except:
                             pctodel = 0
